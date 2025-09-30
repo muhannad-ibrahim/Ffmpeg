@@ -1,0 +1,40 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y build-essential autoconf automake libtool pkg-config nasm doxygen
+
+    - name: configure
+      run: ./configure --enable-shared --toolchain=gcov --prefix=$GITHUB_WORKSPACE/ffmpeg-install --doxygen=doxygen
+
+    - name: Build
+      run: make -j$(nproc) && make apidoc
+
+    - name: Run regression tests
+      run: export LD_LIBRARY_PATH="$PWD:$PWD/libavutil:$PWD/libavcodec:$PWD/libavformat:$PWD/libswscale:$PWD/libswresample:$PWD/libavfilter:$PWD/libavdevice:$LD_LIBRARY_PATH" && make fate
+
+    - name: Run install
+      run: make install
+      
+    # - name: 'ApiCov'
+    #   uses: codesa-ai/ApiCov@v0.3.4-pre
+    #   with:
+    #     root_path: ${{ github.workspace }}
+    #     api_key: ${{ secrets.APICOV_KEY }}
+    #     install_path: $GITHUB_WORKSPACE/ffmpeg-install
+    #     doxygen_path: $GITHUB_WORKSPACE/doc/doxy
