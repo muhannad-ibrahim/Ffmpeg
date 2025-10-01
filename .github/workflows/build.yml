@@ -36,10 +36,10 @@ jobs:
     - name: Run install
       run: make install
       
-    # - name: 'ApiCov'
-    #   uses: codesa-ai/ApiCov@v0.3.4-pre
-    #   with:
-    #     root_path: ${{ github.workspace }}
-    #     api_key: ${{ secrets.APICOV_KEY }}
-    #     install_path: $GITHUB_WORKSPACE/ffmpeg-install
-    #     doxygen_path: $GITHUB_WORKSPACE/doc/doxy
+    - name: 'ApiCov'
+      uses: codesa-ai/ApiCov@v0.3.4-pre
+      with:
+        root_path: ${{ github.workspace }}
+        api_key: ${{ secrets.APICOV_KEY }}
+        install_path: $GITHUB_WORKSPACE/ffmpeg-install
+        doxygen_path: $GITHUB_WORKSPACE/doc/doxy
