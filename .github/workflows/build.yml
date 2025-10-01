@@ -20,7 +20,9 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y build-essential autoconf automake libtool pkg-config nasm 
       # doxygen
     - name: configure
-      run: ./configure --enable-shared --prefix=$GITHUB_WORKSPACE/ffmpeg-install 
+      run: |
+        chmod +x configure
+        ./configure --enable-shared --prefix=$GITHUB_WORKSPACE/ffmpeg-install 
       # --doxygen=doxygen --toolchain=gcov
 
     - name: Build
