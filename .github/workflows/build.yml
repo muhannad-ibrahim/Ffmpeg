@@ -19,6 +19,10 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y build-essential autoconf automake libtool pkg-config nasm 
       # doxygen
+
+    - name: Fix permissions
+      run: find . -type f -name "*.sh" -exec chmod +x {} \;
+
     - name: configure
       run: |
         chmod +x configure
