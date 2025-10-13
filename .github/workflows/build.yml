@@ -43,4 +43,3 @@ jobs:
         api_key: ${{ secrets.APICOV_KEY }}
         install_path: $GITHUB_WORKSPACE/ffmpeg-install
         doxygen_path: $GITHUB_WORKSPACE/doc/doxy
-
